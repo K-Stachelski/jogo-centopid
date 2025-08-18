@@ -1,4 +1,5 @@
 Ola pessoal, esse é um codigo baseado no grande jogo da Cobrinha, um jogo bem antigo por sinal.
+
 Executar codigo, passos:
  - Instalar Python em sua ultima versão.
  - Instalar a biblioteca Pygame via terminal. Passos da instalação:
