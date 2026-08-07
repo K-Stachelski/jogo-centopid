@@ -15,20 +15,41 @@ class Background(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
 
+#função pra colocar sprite na comida
+class Food(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        # Inicializa a classe pai Sprite corretamente
+        super().__init__()
+        
+        self.sprites = []
+        # Carrega a imagem de fato usando pygame.image.load()
+        self.sprites.append(pygame.image.load('comida.png'))
+        
+        self.atual = 0
+        self.image = self.sprites[self.atual]
+        
+        # Pega o retângulo da imagem e define a posição na tela
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
+
+    def sortear_posicao(self):
+        self.rect.x = randint(50, 730)
+        self.rect.y = randint(50, 430)
+
 #cria o botao
 class Button():
-	def __init__(self, image, x_pos, y_pos):
-		self.image = image
-		self.x_pos = x_pos
-		self.y_pos = y_pos
-		self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
+    def __init__(self, image, x_pos, y_pos):
+        self.image = image
+        self.x_pos = x_pos
+        self.y_pos = y_pos
+        self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
 
-	def update(self):
-		tela.blit(self.image, self.rect)
+    def update(self):
+        tela.blit(self.image, self.rect)
 
-	def checkForInput(self, position):
-		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
-			print("Button Press!")
+    def checkForInput(self, position):
+        if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
+            print("Button Press!")
 
 # Carregar os arquivos de imagens
 def carregar_arquivos(self):
@@ -67,8 +88,7 @@ def reiniciar():
     y_cobra = int(altura//2)
     lista_cobra = []
     lista_cabeca = []
-    x_comida = randint(120, 550)
-    y_comida = randint(120, 350)
+    food.sortear_posicao()
     morreu = False
 
 #definindo o botao de play
@@ -100,17 +120,10 @@ button_surface3 = pygame.image.load("casa.png")
 button_surface3 = pygame.transform.scale(button_surface3, (121, 122))
 button3 = Button(button_surface3, 81, 413)
 
-#função pra colocar sprite na comida
-'''class Food(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.sprites = []
-        self.sprites.append('Documentos/comida.png')
-        self.atual = 0
-        self.image = self.sprites[self.atual]
-        #self.rect = self.image.get_rect()
-
-#food = Food()'''
+# Comida
+food = Food(randint(120, 650), randint(120, 450))
+grupo_sprites = pygame.sprite.Group()
+grupo_sprites.add(food)
 
 BackGround = Background('background.png', [0,0])
 Tela_Inicial = Background('inicio.png', [0,0])
@@ -156,7 +169,7 @@ fonte = pygame.font.SysFont('Comic Sans', 25, True, False)
 tela = pygame.display.set_mode((largura, altura))
 
 # Nome que vai ter o arquivo na hora que abrir.
-pygame.display.set_caption('TRABALHO DE ENGENHARIA DE SOFTWARE')
+pygame.display.set_caption('CENTOPID')
 
 relogio = pygame.time.Clock()
 
@@ -176,6 +189,7 @@ rec = 0
 rec2 = 0
 inicio = 0
 modo = 0
+skin = 0
 
 while 1:
     relogio.tick(60)
@@ -203,7 +217,7 @@ while 1:
         button.update()
 
     #tela de seleção de personagem 
-    if inicio == 1:
+    elif inicio == 1:
         tela.fill([255, 255, 255])
         tela.blit(Tela_Selecao.image, Tela_Selecao.rect)
 
@@ -232,7 +246,7 @@ while 1:
         claudio.update()
 
     # Selecao do modo longo/infinito ou curto.
-    if inicio == 2:
+    elif inicio == 2:
         tela.fill([255, 255, 255])
         tela.blit(Tela_Modo.image, Tela_Modo.rect)
 
@@ -240,7 +254,7 @@ while 1:
             if evento.type == QUIT:
                 pygame.quit()
                 exit()
-        if evento.type == pygame.MOUSEBUTTONDOWN:
+            if evento.type == pygame.MOUSEBUTTONDOWN:
                 if button2.rect.collidepoint(pygame.mouse.get_pos()):
                     #m_botao.play()
                     time.sleep(0.1)
@@ -265,16 +279,12 @@ while 1:
         infinito.update()
 
     #tela de gameplay do jogo
-    if inicio == 3:
+    elif inicio == 3:
         tela.fill([255, 255, 255])
         tela.blit(BackGround.image, BackGround.rect)
     
         # definindo a comida com os sprites
-        #comida = Food((x_comida, y_comida))
-        #group = pygame.sprite.RenderPlain()
-        #group.add(comida)
-        #group.draw(tela)
-        #pygame.display.flip()
+        grupo_sprites.draw(tela)
 
         # Mensagem de quantidade de pontos.
         if modo == 1:
@@ -349,13 +359,6 @@ while 1:
         if skin == 1:
             cobrinha = pygame.draw.circle(tela, (126, 20, 186), (x_cobra, y_cobra), 15) #skin roxa da centopeia (Cláudio)
 
-        # Desenho da comida.
-        if modo == 1 and pontos == 29:
-            comida = pygame.draw.circle(tela, (0, 0, 0), (x_comida, y_comida), 8)
-        else:
-            comida = pygame.draw.circle(tela, (214, 192, 26), (x_comida, y_comida), 8)
-        #comida = Food((x_comida, y_comida))
-
         # Desenhos das paredes.
         t_teto = pygame.draw.rect(tela, (0, 0, 0), (0, 0, 800, 1))
         t_chao = pygame.draw.rect(tela, (0, 0, 0), (0, 499, 800, 30))
@@ -363,7 +366,7 @@ while 1:
         parede_direita = pygame.draw.rect(tela, (0, 0, 0), (799, 0, 30, 500))
 
         # Colisao a comida.
-        if cobrinha.colliderect(comida):
+        if cobrinha.colliderect(food.rect):
             if modo == 1 and pontos == 29:
                 pontos += 1
                 if pontos >= rec:
@@ -372,10 +375,7 @@ while 1:
                 #pygame.mixer.music.set_volume(0.5)
                 #m_comida2.play()
             else:
-                x_comida = randint(50, 750)
-                y_comida = randint(10, 450)
-                #Food.draw(tela)
-                #Food.update()
+                food.sortear_posicao()
 
                 # Aumenta a contagem de pontos
                 pontos +=1
@@ -409,7 +409,7 @@ while 1:
             #m_morte = pygame.mixer.music.load('morte.wav')
             #pygame.mixer.music.play(-1)
             fonte2 = pygame.font.SysFont('Comic Sans', 25, True, False)
-            fonte3 = pygame.font.SysFont('Press Start 2P', 65, True, False)
+            fonte3 = pygame.font.SysFont('Comic Sans', 50, True, False)
             msg = 'GAME OVER'
             msg2 = "Pressione a tecla 'R' para reiniciar o jogo"
             msg3 = "ou pressione a tecla 'E' para voltar a tela inicial"
