@@ -22,7 +22,7 @@ class Food(pygame.sprite.Sprite):
         
         self.sprites = []
         # Carrega a imagem
-        self.sprites.append(pygame.image.load('comida.png'))
+        self.sprites.append(pygame.image.load('Centopid/imagens/comida.png'))
         self.atual = 0
         self.image = self.sprites[self.atual]
         
@@ -51,7 +51,7 @@ class Button():
 
 # Carregar os arquivos de imagens
 def carregar_arquivos(self):
-    diretorio = os.path.join(os.getcwd(), 'img')
+    diretorio = os.path.join(os.getcwd(), 'Centopid/imagens')
 
 # Desenho da Cobra.
 def aumenta_cobra(lista_cobra):
@@ -68,11 +68,11 @@ def iniciar():
     #pygame.mixer.music.play(-1)
     pontos = 0
     tam_inicial = 2
-    velocidade = 2.5
     x_cobra = int(largura//2)
     y_cobra = int(altura//2)
     lista_cobra = []
     lista_cabeca = []
+    velocidade = 2.5
     morreu = False
 
 def reiniciar():
@@ -81,40 +81,40 @@ def reiniciar():
     #pygame.mixer.music.play(-1)
     pontos = 0
     tam_inicial = 2
-    velocidade = 2.5
     x_cobra = int(largura//2)
     y_cobra = int(altura//2)
     lista_cobra = []
     lista_cabeca = []
     food.sortear_posicao()
+    velocidade = 2.5
     morreu = False
 
 # Botoes
-button_surface = pygame.image.load("play.png")
+button_surface = pygame.image.load("Centopid/imagens/play.png")
 button_surface = pygame.transform.scale(button_surface, (210, 109))
 button = Button(button_surface, 363, 410)
 
-button_surface2 = pygame.image.load("volta.png")
+button_surface2 = pygame.image.load("Centopid/imagens/volta.png")
 button_surface2 = pygame.transform.scale(button_surface2, (104, 79))
 button2 = Button(button_surface2, 52, 460)
 
-button_sergio = pygame.image.load("sergio.png")
+button_sergio = pygame.image.load("Centopid/imagens/sergio.png")
 button_sergio = pygame.transform.scale(button_sergio, (205, 297))
 sergio = Button(button_sergio, 216, 237)
 
-button_claudio = pygame.image.load("claudio.png")
+button_claudio = pygame.image.load("Centopid/imagens/claudio.png")
 button_claudio = pygame.transform.scale(button_claudio, (198, 293))
 claudio = Button(button_claudio, 493, 238)
 
-button_curto = pygame.image.load("curto.png")
+button_curto = pygame.image.load("Centopid/imagens/curto.png")
 button_curto = pygame.transform.scale(button_curto, (183, 91))
 curto = Button(button_curto, 389, 222)
 
-button_infinito = pygame.image.load("infinito.png")
+button_infinito = pygame.image.load("Centopid/imagens/infinito.png")
 button_infinito = pygame.transform.scale(button_infinito, (180, 91))
 infinito = Button(button_infinito, 394, 348)
 
-button_surface3 = pygame.image.load("casa.png")
+button_surface3 = pygame.image.load("Centopid/imagens/casa.png")
 button_surface3 = pygame.transform.scale(button_surface3, (121, 122))
 button3 = Button(button_surface3, 81, 413)
 
@@ -123,11 +123,11 @@ food = Food(randint(120, 650), randint(120, 450))
 grupo_sprites = pygame.sprite.Group()
 grupo_sprites.add(food)
 
-BackGround = Background('background.png', [0,0])
-Tela_Inicial = Background('inicio.png', [0,0])
-Tela_Selecao = Background('selecao.png', [0,0])
-Tela_Modo = Background('modo.png', [0,0])
-Tela_Creditos = Background('creditos.png', [0,0])
+BackGround = Background('Centopid/imagens/background.png', [0,0])
+Tela_Inicial = Background('Centopid/imagens/inicio.png', [0,0])
+Tela_Selecao = Background('Centopid/imagens/selecao.png', [0,0])
+Tela_Modo = Background('Centopid/imagens/modo.png', [0,0])
+Tela_Creditos = Background('Centopid/imagens/creditos.png', [0,0])
 
 '''# Musica de fundo e Volume.
 pygame.mixer.music.set_volume(0.2)
@@ -191,7 +191,7 @@ skin = 0
 
 while 1:
     relogio.tick(60)
-    
+
     #tela de inicio
     if inicio == 0:
         tela.fill([255, 255, 255])
@@ -363,7 +363,7 @@ while 1:
         parede_esquerda = pygame.draw.rect(tela, (0, 0, 0), (0, 0, 2, 500))
         parede_direita = pygame.draw.rect(tela, (0, 0, 0), (799, 0, 30, 500))
 
-        # Colisao a comida.
+        # Colisao na comida.
         if cobrinha.colliderect(food.rect):
             if modo == 1 and pontos == 29:
                 pontos += 1
@@ -401,7 +401,6 @@ while 1:
 
         # Reiniciar o jogo, apresenta uma mensagem de 'Game Over' e reseta todas as posicoes
         if lista_cobra.count(lista_cabeca) > 1 or cobrinha.colliderect(t_teto) or cobrinha.colliderect(t_chao) or cobrinha.colliderect(parede_direita) or cobrinha.colliderect(parede_esquerda):
-            velocidade = 2.5
             #m_dano.play()
             time.sleep(0.3)
             #m_morte = pygame.mixer.music.load('morte.wav')
@@ -436,7 +435,6 @@ while 1:
                     if evento.type == KEYDOWN:
                         if evento.key == K_r:
                             cont += 1
-                            velocidade = 2.5
                             #pygame.mixer.music.stop()
                             reiniciar()
 
