@@ -7,10 +7,10 @@ import time
 
 pygame.init()
 
-# Carregar uma imagem de fundo.
+# Carregar background.
 class Background(pygame.sprite.Sprite):
     def __init__(self, image_file, location):
-        pygame.sprite.Sprite.__init__(self)  #call Sprite initializer
+        pygame.sprite.Sprite.__init__(self) 
         self.image = pygame.image.load(image_file)
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
@@ -18,17 +18,15 @@ class Background(pygame.sprite.Sprite):
 #função pra colocar sprite na comida
 class Food(pygame.sprite.Sprite):
     def __init__(self, x, y):
-        # Inicializa a classe pai Sprite corretamente
         super().__init__()
         
         self.sprites = []
-        # Carrega a imagem de fato usando pygame.image.load()
+        # Carrega a imagem
         self.sprites.append(pygame.image.load('comida.png'))
-        
         self.atual = 0
         self.image = self.sprites[self.atual]
         
-        # Pega o retângulo da imagem e define a posição na tela
+        # Redimensionamento
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
 
@@ -36,7 +34,7 @@ class Food(pygame.sprite.Sprite):
         self.rect.x = randint(50, 730)
         self.rect.y = randint(50, 430)
 
-#cria o botao
+# Cria o botao
 class Button():
     def __init__(self, image, x_pos, y_pos):
         self.image = image
@@ -55,7 +53,7 @@ class Button():
 def carregar_arquivos(self):
     diretorio = os.path.join(os.getcwd(), 'img')
 
-# Funcao que desenha a cobra.
+# Desenho da Cobra.
 def aumenta_cobra(lista_cobra):
     for xy in lista_cobra:
         pygame.draw.circle(tela, (44, 44, 44), (xy[0], xy[1]), 15) #skin preta (Sérgio)
@@ -91,7 +89,7 @@ def reiniciar():
     food.sortear_posicao()
     morreu = False
 
-#definindo o botao de play
+# Botoes
 button_surface = pygame.image.load("play.png")
 button_surface = pygame.transform.scale(button_surface, (210, 109))
 button = Button(button_surface, 363, 410)
