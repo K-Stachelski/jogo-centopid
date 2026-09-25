@@ -7,15 +7,16 @@ import time
 
 pygame.init()
 
-# Carregar background.
+# Carregar Fundo de tela.
 class Background(pygame.sprite.Sprite):
     def __init__(self, image_file, location):
         pygame.sprite.Sprite.__init__(self) 
         self.image = pygame.image.load(image_file)
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
+# END BACKGROUND
 
-#função pra colocar sprite na comida
+# Sprite
 class Food(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
@@ -33,8 +34,9 @@ class Food(pygame.sprite.Sprite):
     def sortear_posicao(self):
         self.rect.x = randint(50, 730)
         self.rect.y = randint(50, 430)
+# END FOOD
 
-# Cria o botao
+# Cria botoes
 class Button():
     def __init__(self, image, x_pos, y_pos):
         self.image = image
@@ -48,20 +50,26 @@ class Button():
     def checkForInput(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
             print("Button Press!")
+# END BUTTON
 
 # Carregar os arquivos de imagens
 def carregar_arquivos(self):
     diretorio = os.path.join(os.getcwd(), 'Centopid/imagens')
+# END CARREGAR_ARQUIVOS
 
-# Desenho da Cobra.
+# Desenho da Centopeia Sergio.
 def aumenta_cobra(lista_cobra):
     for xy in lista_cobra:
         pygame.draw.circle(tela, (44, 44, 44), (xy[0], xy[1]), 15) #skin preta (Sérgio)
+# END AUMENTA_SERGIO
 
+# Desenho da Centopia Claudio
 def aumenta_cobra2(lista_cobra):
     for xy in lista_cobra:
         pygame.draw.circle(tela, (126, 20, 186), (xy[0], xy[1]), 15) #skin roxa (Cláudio)
+# END AUMENTA_CLAUDIO
 
+# Incio do jogo
 def iniciar():
     global pontos, tam_inicial, x_cobra, y_cobra, lista_cabeca, lista_cobra, x_comida, y_comida, morreu, velocidade
     #m_fundo = pygame.mixer.music.load('tela_inicio.wav')
@@ -74,7 +82,9 @@ def iniciar():
     lista_cabeca = []
     velocidade = 2.5
     morreu = False
+# END INICIAR
 
+# Opcao de Reiniciar o Jogo
 def reiniciar():
     global pontos, tam_inicial, x_cobra, y_cobra, lista_cabeca, lista_cobra, x_comida, y_comida, morreu, velocidade
     #gameplay = pygame.mixer.music.load('musica_gameplay.wav')
@@ -88,6 +98,7 @@ def reiniciar():
     food.sortear_posicao()
     velocidade = 2.5
     morreu = False
+# END REINICIAR
 
 # Botoes
 button_surface = pygame.image.load("Centopid/imagens/play.png")
